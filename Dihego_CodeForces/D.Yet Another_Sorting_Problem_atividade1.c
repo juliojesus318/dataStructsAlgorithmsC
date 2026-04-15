@@ -44,10 +44,11 @@ void mergeSort(int arr[], int l, int r) {
 }
 
 int main() {
-    int t;
-    scanf("%d", &t);
+    int x;
+    scanf("%d", &x);
 
-    while (t--) {
+    int y = 0;
+    while (y < x) {
         int n;
         scanf("%d", &n);
 
@@ -71,44 +72,45 @@ int main() {
 
         if (repetido) {
             printf("YES\n");
-            continue;
-        }
+        } else {
+            int pos[n + 1];
+            for (int i = 0; i < n; i++) {
+                pos[vau[i]] = i;
+            }
 
-        int pos[n + 1];
-        for (int i = 0; i < n; i++) {
-            pos[vau[i]] = i;
-        }
+            int p[n];
+            for (int i = 0; i < n; i++) {
+                p[i] = pos[vector[i]];
+            }
 
-        int p[n];
-        for (int i = 0; i < n; i++) {
-            p[i] = pos[vector[i]];
-        }
+            int visited[n];
+            for (int i = 0; i < n; i++) {
+                visited[i] = 0;
+            }
 
-        int vis[n];
-        for (int i = 0; i < n; i++) {
-            vis[i] = 0;
-        }
+            int cycles = 0;
 
-        int cycles = 0;
+            for (int i = 0; i < n; i++) {
+                if (!visited[i]) {
+                    cycles++;
+                    int g = i;
 
-        for (int i = 0; i < n; i++) {
-            if (!vis[i]) {
-                cycles++;
-                int cur = i;
-
-                while (!vis[cur]) {
-                    vis[cur] = 1;
-                    cur = p[cur];
+                    while (!visited[g]) {
+                        visited[g] = 1;
+                        g = p[g];
+                    }
                 }
             }
+
+            int resultado = n - cycles;
+
+            if (resultado % 2 == 0)
+                printf("YES\n");
+            else
+                printf("NO\n");
         }
 
-        int resultado = n - cycles;
-
-        if (resultado % 2 == 0)
-            printf("YES\n");
-        else
-            printf("NO\n");
+        y++;
     }
 
     return 0;
